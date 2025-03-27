@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Ensure full repo is checked out
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -20,12 +22,15 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -r requirements.txt
-          pip install pytest
+          pip install pytest requests
+
+      - name: Check if test file exists
+        run: ls -R  # Debugging step
 
       - name: Start FastAPI Server in the Background
         run: |
           uvicorn apiserver:app --host 127.0.0.1 --port 8000 --reload &
-          sleep 3  # Give server time to start
+          sleep 3  # Allow server time to start
 
       - name: Wait for FastAPI to Start
         run: |

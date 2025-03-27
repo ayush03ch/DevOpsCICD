@@ -41,4 +41,4 @@ jobs:
           done
 
       - name: Run Tests
-        run: pytest tests/testautomation2.py --disable-warnings
+        run: pytest testautomation2.py --disable-warnings
